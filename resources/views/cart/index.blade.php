@@ -134,7 +134,7 @@
                         }
                     });
             });
-            
+
             // 监听 移除 按钮的点击事件
             $('.btn-remove').click(function () {
                 // $(this) 可以获取到当前点击的 移除 按钮的 jQuery 对象
