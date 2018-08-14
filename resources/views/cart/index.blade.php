@@ -144,8 +144,9 @@
                             });
                             html += '</div>';
                             swal({content: $(html)[0], icon: 'error'})
+                        } else if (error.response.status === 403) { // 这里判断状态 403
+                            swal(error.response.data.msg, '', 'error');
                         } else {
-                            // 其他情况应该是系统挂了
                             swal('系统错误', '', 'error');
                         }
                     });
@@ -212,7 +213,7 @@
                             swal(error.response.data.msg, '', 'error');
                         } else {
                             // 其他错误
-                            swal('系统内部错误', '', 'error');
+                            swal('系统内部错误1', '', 'error');
                         }
                     })
             });
