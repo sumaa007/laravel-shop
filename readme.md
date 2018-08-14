@@ -7,52 +7,73 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel
+环境的使用
+mv|touch  等在 虚拟机|连接工具上使用
+composer|yarn|npm  在本地终端使用=>git 提供的终端环境
+保证了yarn这些的版本问题
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+bad  requres
+复制  .env
+composer install
+php artsan  passport:keys
+openssl config failed: error:02001003:system library:fopen:No such process
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+git——CRLF-LF
+The file will have its original line endings in your working directory.
+warning: CRLF will be replaced by LF in resources/views/layouts/_header.blade.php.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+git config core.autocrlf false
+git add -A
 
-## Learning Laravel
+alert();
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+debugger-controller
+use Illuminate\Support\Facades\Log;
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+Log::error(compact('list', 'list2'));
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+git 建立 流程 
+github 新建 (如果是新的电脑/虚拟机，可以把秘钥或者设置用户名，email)
+git clone ...
+git add ...
+git commit “。。。。”
+git push origin master/dev/等
+注意:commit 时 内容用 双引号
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
+遇见网页上 not input 。。。时 ，其中一种情况是变动了配置文件而没有重新加载这项配置（是Homestead的配置） 
+数据库连接前可用连接工具测试  但是 .env   下  DB_host =127.0.0.1   时易出错 于执行 php artisan migrate ，建议改为 DB_host = localhost  
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+error:路由错误  |   缓存  | not defined auth.login   
 
-## Security Vulnerabilities
+解决：php artisan route:cache && php artisan config:cache    以及 composer dumpautoload
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+laravel-shop
+composer
+composer require overtrue/laravel-lang
+composer require encore/laravel-admin "1.5.*"
+composer require predis/predis
+composer require endroid/qr-code
+// 生成二维码
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+后台图片错误，上传文件后只是存了文件，没有给予其软连接
+php artisan storage:link
+
+展示时图片储存为软连接的不显示，需转为绝对路径
+在对应的Model中，首先判断是否为完整的url，主要看有无http/https
+use Illuminate\Support\Str;
+
+    public function getImageUrlAttribute()
+    {
+        // 如果 image 字段本身就已经是完整的 url 就直接返回
+        if (Str::startsWith($this->attributes['image'], ['http://', 'https://'])) {
+            return $this->attributes['image'];
+        }
+        return \Storage::disk('public')->url($this->attributes['image']);
+// \Storage::disk('public') 此配置在对应的配置环境中需一致
+    }
+
+通知类:	notification 
+php artisan make:notification OrderPaidNotification
