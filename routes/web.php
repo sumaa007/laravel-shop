@@ -46,6 +46,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('orders/{order}/review', 'OrdersController@sendReview')->name('orders.review.store');
         // 支付退款
         Route::post('orders/{order}/apply_refund', 'OrdersController@applyRefund')->name('orders.apply_refund');
+        // 优惠券查询
+        Route::get('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
     });
 });
 Route::get('products/{product}', 'ProductsController@show')->name('products.show');
