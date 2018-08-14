@@ -44,6 +44,8 @@ Route::group(['middleware' => 'auth'], function() {
         // 商品评价
         Route::get('orders/{order}/review', 'OrdersController@review')->name('orders.review.show');
         Route::post('orders/{order}/review', 'OrdersController@sendReview')->name('orders.review.store');
+        // 支付退款
+        Route::post('orders/{order}/apply_refund', 'OrdersController@applyRefund')->name('orders.apply_refund');
     });
 });
 Route::get('products/{product}', 'ProductsController@show')->name('products.show');
